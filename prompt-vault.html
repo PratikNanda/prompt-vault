@@ -1,0 +1,1502 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>PromptVault — Best LLM Prompts for Organizations</title>
+<style>
+/* ── LIGHT (default) ──────────────────────────────── */
+:root {
+  --bg: #f0f4f8;
+  --sidebar-bg: #ffffff;
+  --card: #ffffff;
+  --card-hover: #f5f9ff;
+  --border: rgba(15,35,60,.09);
+  --border-hover: rgba(14,116,144,.35);
+  --text: #0c1a28;
+  --muted: #5c7080;
+  --header-bg: rgba(240,244,248,.92);
+  --shadow-card: 0 1px 3px rgba(15,35,60,.07),0 4px 14px rgba(15,35,60,.05);
+  --shadow-hover: 0 8px 26px rgba(15,35,60,.13);
+  --code-bg: rgba(15,35,60,.04);
+  --code-border: rgba(15,35,60,.09);
+  --code-text: #1a3040;
+  --var-color: #0369a1;
+  --var-bg: rgba(3,105,161,.09);
+  --copy-hover-bg: rgba(3,105,161,.08);
+  --copy-hover-border: rgba(3,105,161,.3);
+  --copy-hover-text: #0369a1;
+  --ok-bg: rgba(5,150,105,.09);--ok-border:rgba(5,150,105,.28);--ok-text:#047857;
+  --expand-hover: #0369a1;
+  --hero-tag-bg: rgba(3,105,161,.07);
+  --hero-tag-border: rgba(3,105,161,.18);
+  --hero-tag-text: #0369a1;
+  --sidebar-hover: rgba(15,35,60,.05);
+  --sidebar-active-bg: rgba(3,105,161,.08);
+  --sidebar-active-text: #075985;
+  --sidebar-active-border: #0284c7;
+  --cnt-bg: rgba(15,35,60,.07);
+  --stat-g: linear-gradient(135deg,#0284c7,#0891b2);
+  --logo-g: linear-gradient(135deg,#0284c7,#0891b2);
+  --orb-op: .055;
+  --scroll: rgba(15,35,60,.14);
+}
+/* ── DARK ─────────────────────────────────────────── */
+html.dark {
+  --bg: #080e18;
+  --sidebar-bg: #0d1420;
+  --card: rgba(255,255,255,.04);
+  --card-hover: rgba(255,255,255,.07);
+  --border: rgba(255,255,255,.08);
+  --border-hover: rgba(56,189,248,.38);
+  --text: #dde6f0;
+  --muted: #8899aa;
+  --header-bg: rgba(8,14,24,.82);
+  --shadow-card: none;
+  --shadow-hover: 0 14px 36px rgba(0,0,0,.45);
+  --code-bg: rgba(0,0,0,.35);
+  --code-border: rgba(255,255,255,.07);
+  --code-text: #b8cfe0;
+  --var-color: #7dd3fc;
+  --var-bg: rgba(125,211,252,.12);
+  --copy-hover-bg: rgba(56,189,248,.1);
+  --copy-hover-border: rgba(56,189,248,.36);
+  --copy-hover-text: #7dd3fc;
+  --ok-bg: rgba(52,211,153,.12);--ok-border:rgba(52,211,153,.3);--ok-text:#34d399;
+  --expand-hover: #7dd3fc;
+  --hero-tag-bg: rgba(56,189,248,.1);
+  --hero-tag-border: rgba(56,189,248,.25);
+  --hero-tag-text: #7dd3fc;
+  --sidebar-hover: rgba(255,255,255,.05);
+  --sidebar-active-bg: rgba(56,189,248,.12);
+  --sidebar-active-text: #7dd3fc;
+  --sidebar-active-border: #38bdf8;
+  --cnt-bg: rgba(255,255,255,.08);
+  --stat-g: linear-gradient(135deg,#38bdf8,#22d3ee);
+  --logo-g: linear-gradient(135deg,#38bdf8,#22d3ee);
+  --orb-op: .14;
+  --scroll: rgba(255,255,255,.1);
+}
+
+*{margin:0;padding:0;box-sizing:border-box}
+html{scroll-behavior:smooth}
+body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',system-ui,sans-serif;background:var(--bg);color:var(--text);min-height:100vh;overflow-x:hidden;transition:background-color .3s,color .3s}
+
+/* ORBS */
+.bg-orbs{position:fixed;inset:0;pointer-events:none;z-index:0;overflow:hidden}
+.orb{position:absolute;border-radius:50%;filter:blur(90px);opacity:var(--orb-op);animation:orbFloat 20s ease-in-out infinite;transition:opacity .4s}
+.orb1{width:600px;height:600px;background:radial-gradient(circle,#0284c7,transparent);top:-120px;left:-120px}
+.orb2{width:500px;height:500px;background:radial-gradient(circle,#0891b2,transparent);bottom:-80px;right:-80px;animation-delay:-7s}
+.orb3{width:380px;height:380px;background:radial-gradient(circle,#06b6d4,transparent);top:45%;left:42%;animation-delay:-14s}
+@keyframes orbFloat{0%,100%{transform:translate(0,0) scale(1)}33%{transform:translate(38px,-26px) scale(1.04)}66%{transform:translate(-16px,36px) scale(.96)}}
+
+/* HEADER */
+header{position:sticky;top:0;z-index:50;backdrop-filter:blur(24px);background:var(--header-bg);border-bottom:1px solid var(--border);transition:background .3s,border-color .3s}
+.header-inner{max-width:1440px;margin:0 auto;padding:0 1.5rem;height:60px;display:flex;align-items:center;gap:1.25rem}
+.logo{display:flex;align-items:center;gap:.55rem;flex-shrink:0;text-decoration:none}
+.logo-box{width:32px;height:32px;border-radius:8px;background:linear-gradient(135deg,#0284c7,#0891b2);display:flex;align-items:center;justify-content:center;font-size:15px;animation:logoPulse 3s ease-in-out infinite;flex-shrink:0}
+@keyframes logoPulse{0%,100%{box-shadow:0 0 0 0 rgba(2,132,199,.4)}50%{box-shadow:0 0 0 7px rgba(2,132,199,0)}}
+.logo-name{font-size:1.05rem;font-weight:700;background:var(--logo-g);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text}
+.search-wrap{flex:1;max-width:440px;position:relative}
+.search-icon{position:absolute;left:11px;top:50%;transform:translateY(-50%);color:var(--muted);font-size:13px;pointer-events:none}
+#searchInput{width:100%;background:var(--card);border:1px solid var(--border);border-radius:9px;padding:8px 13px 8px 34px;color:var(--text);font-size:.865rem;outline:none;transition:all .25s;font-family:inherit;box-shadow:var(--shadow-card)}
+#searchInput:focus{border-color:rgba(2,132,199,.45);box-shadow:0 0 0 3px rgba(2,132,199,.1)}
+#searchInput::placeholder{color:var(--muted)}
+.header-right{margin-left:auto;display:flex;align-items:center;gap:1.25rem}
+.stat{text-align:center}
+.stat-n{font-size:1.1rem;font-weight:700;background:var(--stat-g);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text}
+.stat-l{font-size:.67rem;color:var(--muted);text-transform:uppercase;letter-spacing:.07em}
+.theme-btn{width:34px;height:34px;border-radius:8px;border:1px solid var(--border);background:var(--card);color:var(--muted);cursor:pointer;display:flex;align-items:center;justify-content:center;transition:all .25s;flex-shrink:0;box-shadow:var(--shadow-card)}
+.theme-btn:hover{border-color:var(--border-hover);color:var(--text)}
+.icon-sun{display:none}.icon-moon{display:block}
+html.dark .icon-sun{display:block}html.dark .icon-moon{display:none}
+
+/* ── LAYOUT ───────────────────────────────────────── */
+.layout-outer{max-width:1440px;margin:0 auto;display:flex;min-height:calc(100vh - 60px);position:relative;z-index:1}
+
+/* SIDEBAR */
+.sidebar{width:218px;flex-shrink:0;position:sticky;top:60px;height:calc(100vh - 60px);overflow-y:auto;background:var(--sidebar-bg);border-right:1px solid var(--border);padding:.9rem .65rem;transition:background .3s,border-color .3s;scrollbar-width:thin;scrollbar-color:var(--scroll) transparent}
+.sidebar::-webkit-scrollbar{width:3px}
+.sidebar::-webkit-scrollbar-thumb{background:var(--scroll);border-radius:2px}
+.sidebar-label{display:block;font-size:.66rem;font-weight:700;text-transform:uppercase;letter-spacing:.1em;color:var(--muted);padding:.2rem .6rem .55rem;opacity:.8}
+.cat-item{display:flex;align-items:center;gap:.5rem;width:100%;padding:7px 9px;border-radius:7px;border:none;border-left:2.5px solid transparent;background:transparent;color:var(--muted);font-size:.835rem;cursor:pointer;transition:all .18s;text-align:left;font-family:inherit}
+.cat-item:hover{background:var(--sidebar-hover);color:var(--text)}
+.cat-item.active{background:var(--sidebar-active-bg);color:var(--sidebar-active-text);border-left-color:var(--sidebar-active-border);font-weight:600}
+.cat-icon{font-size:.9rem;flex-shrink:0;width:17px;text-align:center;line-height:1}
+.cat-name{flex:1;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.cat-cnt{margin-left:auto;background:var(--cnt-bg);border-radius:50px;padding:1px 7px;font-size:.68rem;flex-shrink:0;transition:background .18s}
+.cat-item.active .cat-cnt{background:var(--sidebar-active-bg);color:var(--sidebar-active-text)}
+.cat-divider{height:1px;background:var(--border);margin:.45rem .3rem}
+
+/* MOBILE strip (hidden on desktop) */
+.mobile-cats{display:none;overflow-x:auto;scrollbar-width:none;gap:.4rem;padding:.7rem 1.2rem;border-bottom:1px solid var(--border);background:var(--sidebar-bg)}
+.mobile-cats::-webkit-scrollbar{display:none}
+.mobile-tab{display:inline-flex;align-items:center;gap:.35rem;padding:5px 12px;border-radius:50px;border:1px solid var(--border);background:transparent;color:var(--muted);font-size:.78rem;font-weight:500;cursor:pointer;transition:all .2s;white-space:nowrap;font-family:inherit;flex-shrink:0}
+.mobile-tab:hover{color:var(--text)}
+.mobile-tab.active{background:var(--sidebar-active-bg);border-color:var(--sidebar-active-border);color:var(--sidebar-active-text);font-weight:600}
+
+/* CONTENT */
+.content-area{flex:1;min-width:0}
+.page-intro{padding:2rem 1.75rem 1.1rem;animation:fadeSlide .6s ease both}
+.page-intro-tag{display:inline-flex;align-items:center;gap:.35rem;padding:4px 12px;border-radius:50px;border:1px solid var(--hero-tag-border);background:var(--hero-tag-bg);color:var(--hero-tag-text);font-size:.75rem;font-weight:600;margin-bottom:.8rem}
+.page-intro h1{font-size:clamp(1.5rem,3vw,2.1rem);font-weight:800;line-height:1.15;margin-bottom:.45rem}
+.page-intro h1 em{font-style:normal;background:linear-gradient(135deg,#0284c7,#0891b2,#06b6d4);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text}
+.page-intro p{color:var(--muted);font-size:.88rem;line-height:1.65;max-width:500px;animation:fadeSlide .6s .1s ease both}
+@keyframes fadeSlide{from{opacity:0;transform:translateY(-16px)}to{opacity:1;transform:translateY(0)}}
+
+/* GRID */
+.main{padding:0 1.75rem 4rem}
+.results-bar{font-size:.81rem;color:var(--muted);margin-bottom:1.1rem}
+.results-bar b{color:var(--text)}
+.grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(330px,1fr));gap:1.1rem}
+
+/* CARD */
+.card{background:var(--card);border:1px solid var(--border);border-radius:12px;padding:1.2rem;transition:all .28s;position:relative;overflow:hidden;animation:cardIn .5s ease both;box-shadow:var(--shadow-card)}
+.card::before{content:'';position:absolute;top:0;left:0;right:0;height:2.5px;background:var(--cg,linear-gradient(90deg,#0284c7,#0891b2))}
+.card:hover{background:var(--card-hover);border-color:var(--border-hover);transform:translateY(-3px);box-shadow:var(--shadow-hover)}
+@keyframes cardIn{from{opacity:0;transform:translateY(20px)}to{opacity:1;transform:translateY(0)}}
+.card-top{display:flex;align-items:flex-start;justify-content:space-between;gap:.7rem;margin-bottom:.65rem}
+.badge{display:inline-flex;align-items:center;gap:.28rem;padding:2px 9px;border-radius:50px;font-size:.68rem;font-weight:600;text-transform:uppercase;letter-spacing:.05em;flex-shrink:0;background:var(--bl-bg);color:var(--bl-col);border:1px solid var(--bl-bdr)}
+html.dark .badge{background:var(--bd-bg);color:var(--bd-col);border-color:var(--bd-bdr)}
+.card-title{font-size:.92rem;font-weight:600;color:var(--text);line-height:1.35;margin-top:.25rem}
+.btn-copy{flex-shrink:0;display:flex;align-items:center;gap:.3rem;padding:5px 11px;border-radius:6px;border:1px solid var(--border);background:transparent;color:var(--muted);font-size:.76rem;font-weight:500;cursor:pointer;transition:all .22s;font-family:inherit}
+.btn-copy:hover{background:var(--copy-hover-bg);border-color:var(--copy-hover-border);color:var(--copy-hover-text)}
+.btn-copy.ok{background:var(--ok-bg);border-color:var(--ok-border);color:var(--ok-text)}
+.prompt-preview{color:var(--muted);font-size:.815rem;line-height:1.65;display:-webkit-box;-webkit-line-clamp:3;line-clamp:3;-webkit-box-orient:vertical;overflow:hidden;margin-bottom:.8rem}
+.prompt-full{display:none;background:var(--code-bg);border:1px solid var(--code-border);border-radius:7px;padding:.85rem;font-size:.785rem;line-height:1.75;color:var(--code-text);white-space:pre-wrap;word-break:break-word;margin-bottom:.7rem;max-height:260px;overflow-y:auto}
+.prompt-full::-webkit-scrollbar{width:3px}
+.prompt-full::-webkit-scrollbar-thumb{background:var(--scroll);border-radius:2px}
+.prompt-full .var{color:var(--var-color);background:var(--var-bg);border-radius:3px;padding:0 3px}
+.card.open .prompt-preview{display:none}
+.card.open .prompt-full{display:block}
+.card-foot{display:flex;align-items:center;justify-content:space-between}
+.expand-btn{background:none;border:none;color:var(--muted);font-size:.76rem;cursor:pointer;display:flex;align-items:center;gap:.3rem;padding:0;font-family:inherit;transition:color .2s}
+.expand-btn:hover{color:var(--expand-hover)}
+.var-count{font-size:.7rem;color:var(--muted);display:flex;align-items:center;gap:.3rem}
+.var-dot{width:5px;height:5px;border-radius:50%;background:var(--var-color);opacity:.5;display:inline-block}
+
+/* EMPTY */
+.empty{display:none;text-align:center;padding:5rem 2rem;color:var(--muted)}
+.empty.show{display:block}
+.empty-ico{font-size:2.5rem;opacity:.3;margin-bottom:1rem}
+
+/* TOAST */
+.toast{position:fixed;bottom:1.75rem;left:50%;transform:translateX(-50%) translateY(80px);backdrop-filter:blur(20px);padding:9px 22px;border-radius:50px;font-size:.865rem;font-weight:500;z-index:200;transition:transform .4s cubic-bezier(.34,1.56,.64,1);pointer-events:none;background:var(--ok-bg);border:1px solid var(--ok-border);color:var(--ok-text)}
+.toast.show{transform:translateX(-50%) translateY(0)}
+
+::-webkit-scrollbar{width:5px}
+::-webkit-scrollbar-thumb{background:var(--scroll);border-radius:3px}
+@media(max-width:860px){.sidebar{display:none}.mobile-cats{display:flex}}
+@media(max-width:580px){.header-right{display:none}.grid{grid-template-columns:1fr}.page-intro h1{font-size:1.4rem}}
+</style>
+</head>
+<body>
+<div class="bg-orbs"><div class="orb orb1"></div><div class="orb orb2"></div><div class="orb orb3"></div></div>
+
+<header>
+  <div class="header-inner">
+    <a class="logo" href="#">
+      <div class="logo-box">⚡</div>
+      <span class="logo-name">PromptVault</span>
+    </a>
+    <div class="search-wrap">
+      <span class="search-icon">🔍</span>
+      <input type="text" id="searchInput" placeholder="Search prompts…" autocomplete="off">
+    </div>
+    <div class="header-right">
+      <div class="stat"><div class="stat-n" id="statTotal">64</div><div class="stat-l">Prompts</div></div>
+      <div class="stat"><div class="stat-n">12</div><div class="stat-l">Categories</div></div>
+      <button class="theme-btn" id="themeToggle" title="Toggle dark mode" aria-label="Toggle dark mode">
+        <svg class="icon-moon" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/></svg>
+        <svg class="icon-sun" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="5"/><line x1="12" y1="1" x2="12" y2="3"/><line x1="12" y1="21" x2="12" y2="23"/><line x1="4.22" y1="4.22" x2="5.64" y2="5.64"/><line x1="18.36" y1="18.36" x2="19.78" y2="19.78"/><line x1="1" y1="12" x2="3" y2="12"/><line x1="21" y1="12" x2="23" y2="12"/><line x1="4.22" y1="19.78" x2="5.64" y2="18.36"/><line x1="18.36" y1="5.64" x2="19.78" y2="4.22"/></svg>
+      </button>
+    </div>
+  </div>
+</header>
+
+<div class="mobile-cats" id="mobileCats"></div>
+
+<div class="layout-outer">
+  <aside class="sidebar">
+    <span class="sidebar-label">Browse</span>
+    <nav id="catList"></nav>
+  </aside>
+  <div class="content-area">
+    <div class="page-intro">
+      <div class="page-intro-tag">✦ Advanced Prompts for Organizations</div>
+      <h1>Stop Using <em>Basic Prompts.</em><br>Use These Instead.</h1>
+      <p>A curated library of ready-to-use prompts for teams — emails, image generation, code reviews, HR workflows, and more.</p>
+    </div>
+    <main class="main">
+      <div class="results-bar" id="resultsBar"></div>
+      <div class="grid" id="grid"></div>
+      <div class="empty" id="empty"><div class="empty-ico">🔍</div><p>No prompts match your search.<br>Try different keywords.</p></div>
+    </main>
+  </div>
+</div>
+
+<div class="toast" id="toast">✓ Copied to clipboard</div>
+
+<script>
+// g=card stripe gradient | bg/col/bdr=dark badge | lbg/lcol/lbdr=light badge
+const CATS = [
+  {id:'all',    name:'All Prompts',        icon:'⊞', g:'linear-gradient(90deg,#0284c7,#0891b2)',  bg:'rgba(56,189,248,.15)', col:'#7dd3fc',bdr:'rgba(56,189,248,.2)',  lbg:'rgba(2,132,199,.1)',  lcol:'#075985',lbdr:'rgba(2,132,199,.22)'},
+  {id:'email',  name:'Professional Email', icon:'✉', g:'linear-gradient(90deg,#0284c7,#2563eb)',  bg:'rgba(56,189,248,.15)', col:'#7dd3fc',bdr:'rgba(56,189,248,.2)',  lbg:'rgba(2,132,199,.1)',  lcol:'#075985',lbdr:'rgba(2,132,199,.22)'},
+  {id:'image',  name:'Image Generation',   icon:'◈', g:'linear-gradient(90deg,#7c3aed,#4f46e5)',  bg:'rgba(167,139,250,.15)',col:'#c4b5fd',bdr:'rgba(167,139,250,.2)', lbg:'rgba(124,58,237,.1)', lcol:'#4c1d95',lbdr:'rgba(124,58,237,.22)'},
+  {id:'code',   name:'Code & Dev',         icon:'⌨', g:'linear-gradient(90deg,#059669,#0891b2)',  bg:'rgba(52,211,153,.15)', col:'#6ee7b7',bdr:'rgba(52,211,153,.2)',  lbg:'rgba(5,150,105,.1)',  lcol:'#064e3b',lbdr:'rgba(5,150,105,.22)'},
+  {id:'data',   name:'Data Analysis',      icon:'◎', g:'linear-gradient(90deg,#d97706,#ea580c)',  bg:'rgba(251,191,36,.15)', col:'#fcd34d',bdr:'rgba(251,191,36,.2)',  lbg:'rgba(217,119,6,.1)',  lcol:'#78350f',lbdr:'rgba(217,119,6,.22)'},
+  {id:'content',name:'Content Creation',   icon:'✎', g:'linear-gradient(90deg,#e11d48,#9333ea)',  bg:'rgba(251,113,133,.15)',col:'#fda4af',bdr:'rgba(251,113,133,.2)', lbg:'rgba(225,29,72,.1)',  lcol:'#881337',lbdr:'rgba(225,29,72,.22)'},
+  {id:'meeting',name:'Meetings & Notes',   icon:'◫', g:'linear-gradient(90deg,#0891b2,#0284c7)',  bg:'rgba(34,211,238,.15)', col:'#67e8f9',bdr:'rgba(34,211,238,.2)',  lbg:'rgba(8,145,178,.1)',  lcol:'#155e75',lbdr:'rgba(8,145,178,.22)'},
+  {id:'research',name:'Research & Reports',icon:'⊕', g:'linear-gradient(90deg,#ea580c,#d97706)',  bg:'rgba(251,146,60,.15)', col:'#fdba74',bdr:'rgba(251,146,60,.2)',  lbg:'rgba(234,88,12,.1)',  lcol:'#7c2d12',lbdr:'rgba(234,88,12,.22)'},
+  {id:'slides', name:'Presentations',      icon:'▤', g:'linear-gradient(90deg,#9333ea,#e11d48)',  bg:'rgba(192,132,252,.15)',col:'#d8b4fe',bdr:'rgba(192,132,252,.2)', lbg:'rgba(147,51,234,.1)', lcol:'#581c87',lbdr:'rgba(147,51,234,.22)'},
+  {id:'hr',     name:'HR & Recruitment',   icon:'⊙', g:'linear-gradient(90deg,#0d9488,#059669)',  bg:'rgba(45,212,191,.15)', col:'#99f6e4',bdr:'rgba(45,212,191,.2)',  lbg:'rgba(13,148,136,.1)', lcol:'#134e4a',lbdr:'rgba(13,148,136,.22)'},
+  {id:'cx',     name:'Customer Service',   icon:'◈', g:'linear-gradient(90deg,#4338ca,#0891b2)',  bg:'rgba(129,140,248,.15)',col:'#a5b4fc',bdr:'rgba(129,140,248,.2)', lbg:'rgba(67,56,202,.1)',  lcol:'#1e1b4b',lbdr:'rgba(67,56,202,.22)'},
+  {id:'social', name:'Social Media',       icon:'◉', g:'linear-gradient(90deg,#db2777,#ea580c)',  bg:'rgba(244,114,182,.15)',col:'#f9a8d4',bdr:'rgba(244,114,182,.2)', lbg:'rgba(219,39,119,.1)', lcol:'#831843',lbdr:'rgba(219,39,119,.22)'},
+  {id:'pm',     name:'Project Management', icon:'◧', g:'linear-gradient(90deg,#0284c7,#059669)',  bg:'rgba(56,189,248,.15)', col:'#7dd3fc',bdr:'rgba(56,189,248,.2)',  lbg:'rgba(2,132,199,.1)',  lcol:'#0c4a6e',lbdr:'rgba(2,132,199,.22)'},
+];
+
+const PROMPTS = [
+// ── PROFESSIONAL EMAIL ──────────────────────────────────────────
+{c:'email',t:'Meeting Request',
+p:`Draft a concise, professional meeting request email to [recipient name] at [company name].
+
+Purpose: [specific meeting objective]
+Proposed slots: [2–3 date/time options]
+Duration: [X minutes]
+
+Requirements:
+• Open with a one-sentence context hook
+• List 3 agenda points as bullets
+• State the value/outcome for both parties
+• Include a calendar link placeholder
+• Tone: [formal / warm-professional]
+• Max 150 words
+
+Subject line: write 3 options for me to choose from.`},
+
+{c:'email',t:'Project Status Update',
+p:`Write a project status update email for [project name] to [stakeholder audience].
+
+Current phase: [phase name]
+This week's progress: [accomplishments]
+Next milestones: [upcoming deliverables + dates]
+Blockers or risks: [any issues]
+Overall health: [🔴 Red / 🟡 Amber / 🟢 Green]
+
+Format with clear sections and bullet points. Lead with the RAG status and single-sentence headline. Tone: confident and transparent. End with one clear ask or FYI from the reader.`},
+
+{c:'email',t:'Decline with Alternatives',
+p:`Write a professional email declining [specific request] from [sender name].
+
+Reason (brief, no over-explaining): [reason]
+Alternatives to offer: [1–2 alternative options]
+
+Requirements:
+• Open with appreciation, not apology
+• Decline clearly in sentence 2 — no ambiguity
+• Pivot immediately to alternatives
+• Close warmly and leave door open
+• Tone: respectful and solution-focused
+• Max 120 words
+• No corporate filler phrases`},
+
+{c:'email',t:'Executive Escalation',
+p:`Draft an escalation email from [my role] to [executive/senior manager] about [issue description].
+
+Background (2 sentences max): [context]
+Business impact: [quantified impact if possible]
+What's already been tried: [previous steps taken]
+Decision/action needed: [specific ask]
+Deadline: [date]
+
+Use bullet points for impact and ask sections. Subject line must convey urgency without being alarmist. Keep under 200 words. Tone: factual, direct, solution-oriented — not complainy.`},
+
+{c:'email',t:'Persistent Follow-Up',
+p:`Write a follow-up email to [contact name] at [company] who hasn't responded to my [email/proposal/request] sent [X days] ago.
+
+Original topic: [what you reached out about]
+Key value or next step: [re-state the hook]
+Soft deadline: [date or reason for urgency]
+
+Rules:
+• Reference previous message naturally without guilt-tripping
+• One new piece of value or insight in this email
+• Single, frictionless CTA
+• Max 90 words
+• Tone: persistent but never pushy
+• 3 subject line options (different angles: curiosity / urgency / direct)`},
+
+{c:'email',t:'Apology & Recovery',
+p:`Write a professional apology email to [recipient / client] regarding [specific mistake or issue].
+
+What went wrong: [clear description]
+Root cause (if known): [cause]
+Corrective action taken: [steps already done]
+Preventive measure going forward: [what changes]
+Compensation offered (if applicable): [details]
+
+Requirements:
+• Lead with the apology — no preamble
+• Take full ownership; no blame-shifting
+• State timeline for resolution explicitly
+• Close with confidence, not groveling
+• Tone: sincere, accountable, forward-looking
+• Max 180 words`},
+
+{c:'email',t:'Business Partnership Proposal',
+p:`Draft a cold partnership proposal email to [contact name] at [target company].
+
+Our company: [1-sentence description]
+Proposed collaboration: [type of partnership]
+What they gain: [specific benefit to them]
+What we gain: [honest mutual value]
+Proposed next step: [e.g., 20-min exploratory call]
+
+Requirements:
+• Subject line that stands out in a full inbox (write 3 options)
+• Open with insight about their business, not about us
+• Keep body under 180 words
+• No attachments mentioned — earn the next step first
+• Tone: peer-to-peer, not vendor pitching to buyer`},
+
+{c:'email',t:'Internal Policy Announcement',
+p:`Write an all-staff (or [department]) announcement email for a new [policy type] policy.
+
+Policy name: [name]
+What's changing: [key changes in plain English]
+Effective date: [date]
+Why this change: [brief rationale — be honest]
+What employees must do: [specific action steps]
+Where to get help: [contact / FAQ link]
+
+Format: short intro paragraph + 3 clear sections with bold headers. Avoid HR jargon. Anticipate the top 2 employee questions and answer them proactively in the body. Tone: clear, direct, supportive.`},
+
+// ── IMAGE GENERATION ───────────────────────────────────────────
+{c:'image',t:'Professional Headshot',
+p:`Photorealistic professional headshot of a [man/woman/person], approximately [age range] years old, wearing [attire: dark navy suit / business casual blazer], confident and approachable expression with a subtle natural smile.
+
+Lighting: soft studio rembrandt lighting with slight rim light on hair
+Background: blurred neutral [grey / dark gradient / white]
+Camera: Sony A7IV, 85mm f/1.8 lens, eyes in sharp focus
+Style: LinkedIn profile / corporate website quality
+Aspect ratio: 1:1, ultra-high resolution`},
+
+{c:'image',t:'Product Photography',
+p:`Professional commercial product photography of [product description] on [white marble slab / warm walnut wood / seamless white sweep].
+
+Lighting: soft diffused light from upper-left, subtle fill from right, realistic shadow beneath product
+Angle: [3/4 front view / top-down flat lay / side profile]
+Depth of field: shallow — background fades smoothly
+Color accuracy: true-to-product, no over-saturation
+Style: high-end catalog / e-commerce hero image, ultra-sharp product detail
+Negative space on [left/right] for text overlay
+Aspect ratio: 4:3 or 1:1, 4K resolution`},
+
+{c:'image',t:'Marketing Banner / Hero Image',
+p:`Modern corporate marketing banner for [brand/product name], clean and professional.
+
+Color palette: primary [color1], accent [color2], neutral [color3]
+Visual theme: convey [innovation / trust / growth / collaboration]
+Design elements: abstract geometric shapes, subtle gradient mesh background from [color A] to [color B], photorealistic 3D accent element ([cube/sphere/flowing ribbon])
+Typography area: blank space on [left/right/bottom] for headline overlay
+Style: Fortune 500 brand quality, minimal and premium
+No text in the image itself
+Aspect ratio: 16:9 (1920×1080), high resolution`},
+
+{c:'image',t:'Modern Office Interior',
+p:`Photorealistic architectural photography of a modern open-plan office interior.
+
+Design style: [contemporary / Scandinavian minimal / biophilic industrial]
+Features: floor-to-ceiling windows with city/nature view, natural light flooding in, ergonomic workstations, collaborative lounge zone visible in background, indoor plants and living walls
+Atmosphere: warm, professional, energetic but calm
+Lighting: soft golden-hour natural light
+Camera: wide-angle 24mm lens, slight warm color grade
+No people visible — empty office ready for team
+Aspect ratio: 16:9, architectural magazine quality`},
+
+{c:'image',t:'Data Infographic Design',
+p:`Clean, modern data infographic illustration on [topic / dataset story].
+
+Color scheme: [primary color] + [secondary color] + white background
+Design language: flat design with subtle gradients and long shadows
+Visual elements: [bar charts / pie charts / flow arrows / timeline], icons for [key categories], data callout boxes
+Typography hierarchy: large bold numbers, clean sans-serif labels
+Layout: [horizontal flow / top-to-bottom narrative / circular radial]
+Style: suitable for executive presentation slide or annual report
+No real data needed — use placeholder numbers
+Dimensions: 1200×800px, print-quality resolution`},
+
+{c:'image',t:'Team Collaboration Illustration',
+p:`Illustrated scene of a diverse professional team collaborating in a modern workspace.
+
+Art style: semi-flat illustration with depth, subtle gradients, clean lines
+Characters: [4–6] diverse professionals (varied ethnicities, ages, genders) in business casual attire, showing engaged positive interaction — pointing at a whiteboard / reviewing a laptop together / in discussion
+Expressions: focused, positive, authentic — no generic smiling stock-photo feel
+Color palette: [brand primary color] + complementary neutral tones
+Background: minimal modern office or abstract workspace
+Suitable for: website hero, company presentation, HR materials
+No text in the image — clean space for overlay
+Style: Dribbble-quality corporate illustration`},
+
+// ── CODE & DEVELOPMENT ─────────────────────────────────────────
+{c:'code',t:'Code Review',
+p:`Review this [language] code across these 5 dimensions:
+
+1. BUGS & LOGIC — any errors or incorrect behavior
+2. SECURITY — vulnerabilities (injection, auth issues, data exposure, etc.)
+3. PERFORMANCE — inefficiencies, unnecessary complexity, N+1 queries
+4. READABILITY — naming, structure, understandability
+5. BEST PRACTICES — patterns, error handling, edge cases missed
+
+Format each finding as:
+[CRITICAL / WARNING / SUGGESTION] Line X: <issue> → <recommended fix>
+
+Finish with: top 3 priority fixes and a rewritten snippet for each.
+
+[paste code here]`},
+
+{c:'code',t:'Bug Investigation',
+p:`Help me debug this issue in [language / framework].
+
+Symptom (what's happening): [describe observed behavior]
+Expected behavior: [what should happen]
+Environment: [OS, runtime version, key dependencies]
+Steps already tried: [debugging steps taken]
+Error output: [exact error message or stack trace]
+
+Please:
+1. List the top 3 most likely root causes, ranked by probability
+2. For the most likely cause: provide a step-by-step diagnostic checklist
+3. Show the corrected code snippet with inline comments explaining the fix
+4. Mention any related issues this fix might surface`},
+
+{c:'code',t:'Write Unit Tests',
+p:`Write comprehensive unit tests for the following [language] code using [testing framework: Jest / pytest / JUnit / etc.].
+
+Cover all of these cases:
+• Happy path: multiple representative inputs
+• Edge cases: empty input, null/None, boundary values, max/min
+• Error conditions: what exceptions should be thrown and when
+• Async behavior (if applicable)
+
+Naming convention: use [Given-When-Then / Arrange-Act-Assert] style
+Mocks: set up mocks for [external services / DB / API calls]
+Target: >90% line coverage
+
+Add a brief comment above each test group explaining the intent.
+
+[paste function or class here]`},
+
+{c:'code',t:'Refactor for Clarity',
+p:`Refactor this [language] code to improve readability, maintainability, and performance — without changing external behavior.
+
+Apply these principles where appropriate:
+• Single Responsibility Principle
+• DRY (eliminate duplication)
+• Meaningful naming (no abbreviations, no "data" / "info" variables)
+• Reduce nesting depth (early returns, guard clauses)
+• Replace magic numbers/strings with named constants
+• [Any specific pattern to apply: strategy / factory / etc.]
+
+For every significant change: add a one-line comment explaining WHY.
+At the end: list remaining technical debt and a suggested cleanup roadmap.
+
+[paste code here]`},
+
+{c:'code',t:'Technical Documentation',
+p:`Write developer documentation for [function name / API endpoint / module].
+
+Include these sections:
+1. Overview — what it does in plain English (2 sentences max)
+2. Parameters — name, type, default value, description for each
+3. Return value — type and structure of output
+4. Throws / Error states — what errors can occur and when
+5. Examples — 3 usage examples from simple → complex
+6. Performance notes — time complexity, rate limits, caveats
+7. See also — related functions or endpoints
+
+Format: [JSDoc / Python docstring / Markdown]
+Audience: mid-level developer unfamiliar with this module`},
+
+{c:'code',t:'Architecture Decision',
+p:`I need to choose between two technical approaches. Help me decide.
+
+Decision: [what needs to be decided]
+Option A: [description]
+Option B: [description]
+Our constraints: [team size, existing stack, scale, budget, timeline]
+
+Evaluate both options on:
+| Criterion | Option A | Option B |
+Performance at scale, Developer experience, Maintainability long-term, Onboarding/learning curve, Cost, Vendor lock-in risk, Community & support maturity
+
+Weight each criterion for our context. Provide a recommendation matrix with scores and your final recommendation with the 3 strongest reasons. Also: what would change your recommendation?`},
+
+{c:'code',t:'API Design Review',
+p:`Review this API design for [service name] and provide structured feedback.
+
+Evaluate:
+1. RESTful principles — proper use of verbs, resource naming, status codes
+2. Consistency — naming conventions across all endpoints
+3. Error response standardization — format, codes, messages
+4. Auth/authorization approach — gaps or improvements
+5. Missing endpoints users will inevitably need
+6. Versioning strategy — forward compatibility
+7. Potential breaking changes if this API evolves
+
+Format: issue → severity (Critical/Moderate/Suggestion) → recommended fix
+End with a revised endpoint list if significant changes are needed.
+
+[paste API spec or endpoint list here]`},
+
+// ── DATA ANALYSIS ──────────────────────────────────────────────
+{c:'data',t:'Trend Analysis for Exec Report',
+p:`Analyze this dataset and produce an executive-ready findings report.
+
+Structure your output:
+1. HEADLINE — single sentence: the most important takeaway
+2. KEY FINDINGS — top 3–5 trends with direction, magnitude, and timeframe
+3. SURPRISING INSIGHTS — anything counterintuitive or unexpected
+4. CORRELATIONS — relationships between variables worth noting
+5. DATA QUALITY — any gaps, anomalies, or caveats in the data itself
+6. RECOMMENDED ACTIONS — 3 specific, actionable next steps
+7. FURTHER ANALYSIS — what to investigate next to deepen understanding
+
+Audience: [C-suite / VP level / non-technical stakeholders]
+Tone: confident, data-driven, plain English — no statistical jargon
+
+[paste data or describe the dataset here]`},
+
+{c:'data',t:'KPI Dashboard Design',
+p:`Design a performance KPI dashboard for a [role: VP Sales / Marketing Manager / COO / etc.] at a [company type/size].
+
+Their key decisions: [describe 2–3 decisions this person makes weekly]
+
+For each of 6–8 recommended metrics, provide:
+• Metric name and precise definition
+• Why it drives better decisions for this role
+• Data source required
+• Best visualization type (and why)
+• Alert thresholds: 🔴 Red / 🟡 Amber / 🟢 Green with values
+• Update frequency (real-time / daily / weekly)
+
+Final section: rank metrics by "decision impact" and flag any that are vanity metrics to avoid.`},
+
+{c:'data',t:'Data-to-Narrative Report',
+p:`Transform these raw data points into a compelling narrative report.
+
+Audience: [executive / board / external client]
+Tone: confident, evidence-based, action-oriented
+
+Structure:
+1. Executive Summary (3 bullet points, under 80 words)
+2. Context — why this data matters now
+3. Key Findings — [3–5 findings, each structured as: FACT → SO WHAT → RECOMMENDED ACTION]
+4. Risk or concern section (if applicable)
+5. Next Steps — specific, owned, time-bound
+6. Appendix reference (data tables go here)
+
+No bullet-point dumps — every finding must connect to a business implication.
+Reading time target: under 4 minutes.
+
+[paste raw data or findings here]`},
+
+{c:'data',t:'SQL Query Builder',
+p:`Write a [PostgreSQL / MySQL / BigQuery / Snowflake] query to answer this business question:
+
+"[state the business question in plain English]"
+
+Available tables: [table names and relevant columns]
+Business logic: [filters, date ranges, groupings, special calculations]
+Output format: [describe what columns the result should have]
+Performance requirement: [optimized for readability / large dataset with index hints]
+
+Provide:
+1. The complete, commented SQL query
+2. A plain-English walkthrough of the logic
+3. Sample expected output (5 rows)
+4. Any alternative approaches and their trade-offs`},
+
+{c:'data',t:'Data Cleaning Plan',
+p:`Create a systematic data cleaning plan for this dataset.
+
+For each issue below, provide the detection method AND the treatment code in [Python pandas / R / SQL]:
+
+1. Missing values — per-column strategy (impute vs. drop, with justification)
+2. Duplicates — detection logic using business key [column names]
+3. Outliers — statistical method (IQR / z-score / domain threshold) + treatment
+4. Format inconsistencies — standardize [date formats / phone numbers / categories]
+5. Referential integrity — cross-table consistency checks
+
+After each step: add a validation assertion to confirm the fix worked.
+End with: a data quality scorecard (before vs. after row counts and null rates).
+
+[describe or paste dataset schema here]`},
+
+// ── CONTENT CREATION ───────────────────────────────────────────
+{c:'content',t:'Long-Form Blog Post',
+p:`Write a [word count: 800–1200] word blog post on [topic] for [target audience persona].
+
+Audience: [e.g., mid-level HR managers at enterprise companies]
+Goal: [educate / persuade / generate leads / build authority]
+SEO keywords to include naturally: [keyword list]
+
+Structure:
+• Hook (first 2 sentences must earn the read — use a stat, story, or contrarian take)
+• 3–4 H2 sections, each with a specific actionable insight
+• At least 1 real-world example or mini case study
+• Conclusion with a single clear CTA
+• No listicles — write in flowing paragraphs with depth
+
+Tone: [authoritative / conversational / inspirational]
+Strict rule: every claim must be specific. No filler phrases like "In today's fast-paced world."`},
+
+{c:'content',t:'Product Description Copy',
+p:`Write product copy for [product name] targeting [buyer persona].
+
+Deliver these 5 formats:
+
+1. HEADLINE (max 10 words) — benefit-focused, not feature-focused
+2. HOOK PARAGRAPH (50 words) — open with the pain point, close with the product promise
+3. FEATURE BULLETS (5 items) — format each as: "[Feature] so you can [outcome]"
+4. SPECS TABLE — [list key specs to fill in]
+5. CLOSING CTA (25 words) — urgency + action verb + value reinforcement
+
+Tone: [premium / approachable / technical]
+Avoid superlatives (best, amazing, revolutionary) — show, don't tell.`},
+
+{c:'content',t:'Press Release',
+p:`Write a press release for [news: product launch / funding / partnership / award].
+
+Standard AP wire format:
+
+FOR IMMEDIATE RELEASE
+[CITY, DATE] —
+
+• Headline: active voice, newsworthy, under 12 words
+• Lead paragraph: answers who, what, when, where, why in 2 sentences
+• Body (2–3 paragraphs): context, significance, market impact
+• Executive quote: from [Name, Title] — make it substantive, not generic PR fluff
+• Supporting quote: from [partner/customer/investor] if applicable
+• Boilerplate: [Company] description (3 sentences)
+• Media contact: placeholder
+
+Length: 400–500 words. No puff. Every sentence must earn its place.`},
+
+{c:'content',t:'Email Newsletter',
+p:`Write a [company / team / personal brand] email newsletter for [audience].
+
+This edition's theme: [topic or narrative thread]
+
+Sections (with suggested word counts):
+1. Editor's Note — personal, conversational opener (60 words)
+2. Main Feature — deep-dive on [topic] (200 words, with subheads)
+3. Quick Hits — 3 news/updates with 1-sentence context each
+4. [Tip / Resource / Spotlight] — practical value section (80 words)
+5. Upcoming — dates and events
+6. Sign-off with CTA: [subscribe / share / reply with feedback]
+
+Tone: [warm and direct / professional / community-feel]
+Target reading time: under 4 minutes
+Subject line: 3 options (curiosity / benefit / FOMO angles)`},
+
+{c:'content',t:'Customer Case Study',
+p:`Write a customer success case study for [client company] using our [product/service].
+
+Structure:
+1. TITLE — format: "[Client] achieved [specific result] with [product]" (one punchy line)
+2. CHALLENGE — the specific pain points before us, with business impact quantified
+3. WHY US — 2–3 reasons they chose our solution (their words if possible)
+4. SOLUTION — what was implemented, key milestones of the rollout
+5. RESULTS — 3–5 outcomes with specific numbers and timeframes
+6. CUSTOMER QUOTE — authentic voice, not PR-polished
+7. KEY TAKEAWAY — one-sentence lesson for the reader
+
+Tone: storytelling-first, evidence-backed
+Audience: prospects in the same industry considering our solution
+Length: 500–700 words`},
+
+{c:'content',t:'White Paper / Thought Leadership',
+p:`Write an outline and executive summary for a thought leadership white paper on [topic].
+
+Target audience: [decision-maker persona]
+Our point of view / thesis: [our unique angle or contrarian claim]
+Evidence we have: [data, research, case studies available]
+
+Deliverables:
+1. Working title (3 options)
+2. Executive summary (200 words) — lead with the insight, not the background
+3. Full outline: Introduction → 4–5 chapters with subheadings → Conclusion + Recommendations
+4. For each chapter: 2-sentence description of the argument made
+5. Recommended data visualizations (1–2 per chapter)
+6. Call to action at the end
+
+Style: Harvard Business Review register — rigorous but readable`},
+
+// ── MEETINGS & NOTES ───────────────────────────────────────────
+{c:'meeting',t:'Meeting Minutes',
+p:`Convert these raw meeting notes into professional minutes.
+
+Output format:
+MEETING: [name] | DATE: [date] | FACILITATOR: [name]
+ATTENDEES: [list] | ABSENT: [list with reason]
+
+For each agenda item:
+• DISCUSSION: bullet-point summary (neutral, factual)
+• DECIDED: [clearly flagged decision, if any]
+• ACTION: [task] | OWNER: [name] | DUE: [date] | PRIORITY: [H/M/L]
+
+NEXT MEETING: [date/topic]
+ITEMS TO ESCALATE: [anything requiring absent-stakeholder input]
+
+Rules: passive voice, no opinions, no attribution to individuals for discussion points (only for decisions/actions).
+
+[paste raw notes here]`},
+
+{c:'meeting',t:'Action Items Extractor',
+p:`Extract and organize all action items from this meeting transcript or notes.
+
+For each action item:
+ACTION: [specific, deliverable-focused description]
+OWNER: [person's name]
+DUE: [date or relative timeframe]
+PRIORITY: [High / Medium / Low]
+DEPENDS ON: [any blockers or prerequisites]
+STATUS: Open
+
+Group results by owner. Flag:
+⚠️ Items with no named owner
+⚠️ Items with no due date
+⚠️ Items that are vague (need clarification)
+
+End with: summary count per owner and total open actions.
+
+[paste transcript or meeting notes here]`},
+
+{c:'meeting',t:'Pre-Meeting Brief',
+p:`Create a 1-page pre-meeting brief for the following:
+
+Meeting: [name]
+Date/Time: [date] | Duration: [X minutes]
+Attendees: [list with roles]
+Organized by: [name]
+
+Include:
+1. OBJECTIVE — one crisp sentence: what this meeting must achieve
+2. AGENDA — items with time allocation (total must equal duration)
+   Mark each item: [DECIDE / DISCUSS / INFORM / WORKSHOP]
+3. PRE-READS — what each attendee should review beforehand
+4. DECISIONS NEEDED — list with decision owner for each
+5. SUCCESS CRITERIA — how we'll know this meeting was worth everyone's time
+6. PARKING LOT — topics explicitly out of scope today
+
+Format: clean, scannable, fits on one printed page`},
+
+{c:'meeting',t:'Difficult Conversation Script',
+p:`Help me prepare for a [1:1 / team / client / cross-functional] conversation about [sensitive topic].
+
+Context:
+My goal: [desired outcome from this conversation]
+My role: [my relationship to them]
+Their likely reaction: [anticipated pushback or emotion]
+What I want to avoid: [e.g., blame spiral / it becoming personal]
+
+Provide:
+1. OPENING (3–4 sentences) — sets collaborative, non-defensive tone
+2. KEY POINTS (3) — what I need to say, with suggested phrasing for each
+3. RESPONSES TO PUSHBACK — for these 2–3 likely objections: [list them]
+4. CLOSE — how to end with clarity on next steps regardless of how it goes
+
+Approach: [empathetic and direct / coaching / accountability-focused]`},
+
+{c:'meeting',t:'Decision Log Entry',
+p:`Create a structured decision log entry for our team wiki.
+
+Decision title: [short descriptive name]
+Date: [date]
+Decision made by: [names + roles]
+Stakeholders informed: [names]
+
+Sections:
+CONTEXT: Why this decision was needed (2–3 sentences)
+OPTIONS CONSIDERED: Brief description of alternatives evaluated
+DECISION: What was decided (clear, unambiguous statement)
+RATIONALE: Top 3–5 reasons this option was chosen
+TRADE-OFFS ACCEPTED: What we're knowingly giving up
+RISKS: Key risks and how they'll be monitored
+REVIEW DATE: When to revisit this decision
+
+Writing rule: write for someone reading this in 18 months with no context. Be precise.`},
+
+// ── RESEARCH & REPORTS ─────────────────────────────────────────
+{c:'research',t:'Competitive Analysis',
+p:`Conduct a structured competitive analysis comparing [competitor 1], [competitor 2], [competitor 3] against us / [our product].
+
+For each competitor, evaluate:
+• Market positioning and target customer
+• Core product capabilities (strengths / gaps)
+• Pricing model and packaging
+• Recent strategic moves (last 6–12 months)
+• Customer sentiment (check G2, Capterra, Reddit, reviews)
+• Team growth signals (job postings indicate priorities)
+
+Synthesis output:
+1. Competitive positioning map (2×2: [axis 1] vs [axis 2])
+2. Top 3 threats to our position
+3. Top 3 differentiation opportunities they're missing
+4. Our recommended positioning statement update`},
+
+{c:'research',t:'Industry Research Brief',
+p:`Write a 1–2 page internal research brief on [industry / market segment] for strategic planning.
+
+Audience: [exec team / product team / board]
+Our context: [our company's position in or adjacent to this market]
+
+Cover:
+1. Market size and growth trajectory (cite sources)
+2. Top 3–5 trends reshaping the space in the next 3–5 years
+3. Key players and market share dynamics
+4. Regulatory / compliance changes on the horizon
+5. Technology disruptions likely to hit (AI, automation, etc.)
+6. Shifting customer/buyer behavior
+7. IMPLICATIONS: top 3 opportunities and 2 risks for us specifically
+
+Format: executive-ready. Bullets over paragraphs. No fluff.`},
+
+{c:'research',t:'SWOT Analysis',
+p:`Perform a rigorous SWOT analysis for [company / product / initiative / decision].
+
+Rules for each quadrant:
+• 5–7 specific, evidence-based points per quadrant
+• No generic statements ("strong brand" is not acceptable without evidence)
+• Each point: [observation] → [so what / implication]
+
+STRENGTHS (internal capabilities, assets, advantages)
+WEAKNESSES (internal gaps, limitations, blind spots)
+OPPORTUNITIES (external trends, market gaps, timing advantages)
+THREATS (external risks, competitive moves, macro headwinds)
+
+Strategic synthesis (the part most SWOTs skip):
+• SO Strategies: use strengths to capture opportunities
+• ST Strategies: use strengths to mitigate threats
+• WO Strategies: fix weaknesses to take opportunities
+• WT Strategies: minimize weaknesses to avoid threats
+
+Final output: top 3 strategic priorities`},
+
+{c:'research',t:'Literature / Source Summary',
+p:`Synthesize the key insights from these research papers, articles, or reports on [topic].
+
+For each source, extract:
+• Main argument or finding (1–2 sentences)
+• Methodology (if empirical research)
+• Key data points or statistics
+• Limitations or caveats the authors acknowledge
+
+Cross-source synthesis:
+1. Points of consensus across sources
+2. Contradictions or active debates in the field
+3. Gaps — what's not yet well understood
+4. Most practically applicable findings
+5. Findings that challenge conventional wisdom (flag these)
+
+Output: formatted as an annotated briefing suitable for [academic / executive / product team] audience.
+
+[paste abstracts, excerpts, or source summaries here]`},
+
+{c:'research',t:'Vendor Evaluation Framework',
+p:`Build a vendor evaluation framework for selecting a [solution type: HR software / cloud provider / data tool / etc.].
+
+Our top priorities: [list 4–5, e.g., security, scalability, integration, support, cost]
+
+Deliverables:
+1. SCORING CRITERIA — 6–8 criteria with:
+   • Definition and what "good" looks like
+   • 1–5 scoring rubric (describe each level)
+   • Weighting % (must total 100%)
+
+2. EVALUATION MATRIX — blank template with all vendors and criteria
+
+3. DISCOVERY QUESTIONS — 15–20 questions to ask in vendor demos (organized by criteria)
+
+4. RED FLAGS — 2–3 warning signs per criteria that should disqualify a vendor
+
+5. REFERENCE CHECK SCRIPT — 5 questions to ask vendor references`},
+
+// ── PRESENTATIONS ──────────────────────────────────────────────
+{c:'slides',t:'Executive Presentation',
+p:`Create a slide-by-slide outline for an executive presentation on [topic].
+
+Audience: [C-suite / board / senior leadership team]
+Duration: [X minutes] → max [X] slides
+Goal: [inform / get approval / drive decision / inspire change]
+
+For each slide:
+SLIDE #: [number]
+TITLE: [written as an assertion/takeaway, not a topic label]
+KEY MESSAGE: [one sentence — the headline the audience must remember]
+CONTENT: [data, visual, or 3 bullets that prove the key message]
+SPEAKER NOTE: [what to say that the slide doesn't show]
+
+Narrative arc: Context → Problem → Insight → Recommendation → Ask
+Final slide: single clear ask with decision deadline`},
+
+{c:'slides',t:'Investor / Sales Pitch Deck',
+p:`Create a [Series A / seed / sales / partner] pitch deck outline for [company/product].
+
+For each of these 10 slides — give the TITLE, KEY MESSAGE (1 sentence), and 3 SUPPORTING POINTS:
+
+1. Hook / Mission — "We exist to [mission], for [who], by [how]"
+2. Problem — make it felt, not just described; include scale
+3. Solution — tie directly to problem; demo/screenshot notes
+4. Market Size — TAM → SAM → SOM with methodology
+5. Traction / Proof — metrics, logos, growth rate
+6. Business Model — how money flows, unit economics
+7. Go-to-Market — who, how, when, channel priority
+8. Competition — honest 2×2 positioning map
+9. Team — why us, why now
+10. The Ask — amount, use of funds, milestones it buys
+
+Style: conviction-building, not just informational. Each slide answers "so what?"`},
+
+{c:'slides',t:'Training Module Design',
+p:`Design a [X-hour / X-day] training module on [skill or topic] for [audience: new hires / managers / technical team].
+
+Deliverables:
+
+LEARNING OBJECTIVES (3–5, SMART format):
+By the end of this training, participants will be able to…
+
+MODULE OUTLINE (with timing):
+For each section: topic, key concepts, activity to reinforce learning, estimated time
+
+ACTIVITIES — for each section, one of:
+• Discussion prompt with facilitation guide
+• Case study or scenario
+• Hands-on exercise or role-play
+
+ASSESSMENT: [quiz / performance task / scenario] to verify comprehension — include 5 sample questions
+
+PRE-WORK to assign (readings, videos, surveys)
+RESOURCE LIST for continued learning
+
+Engagement techniques for [remote / in-person / self-paced] delivery`},
+
+{c:'slides',t:'All-Hands / Town Hall',
+p:`Write a town hall or all-hands presentation script and slide outline.
+
+Company/Team: [name]
+Period covered: [Q1 / H1 / full year]
+Audience: [full company / department / X people]
+Duration: [X minutes]
+CEO/Leader delivering: [name and communication style]
+
+Outline each section with timing + talking points:
+1. OPEN (3 min) — human connection, energy, set the tone
+2. SCORECARD (5 min) — honest progress on goals, RAG status
+3. CELEBRATE (3 min) — specific team/person wins with names
+4. CHALLENGES (4 min) — transparent, no spin, what we learned
+5. DIRECTION (5 min) — top 3 priorities for next period and why
+6. Q&A PREP (5 min) — anticipate top 5 questions employees will ask
+
+Include: suggested FAQ answers for the 5 hardest questions`},
+
+// ── HR & RECRUITMENT ───────────────────────────────────────────
+{c:'hr',t:'Job Description',
+p:`Write a compelling job description for a [job title] role at a [company type: startup / enterprise / agency].
+
+Must-have requirements: [list]
+Nice-to-have: [list]
+Key responsibilities: [list]
+Team/reports to: [context]
+
+Format:
+1. ROLE OVERVIEW (3 sentences) — sell the opportunity first, then describe the job
+2. WHAT YOU'LL DO — 5–7 specific responsibilities (outcome-focused verbs)
+3. WHAT WE'RE LOOKING FOR — must-haves and nice-to-haves clearly separated
+4. WHAT WE OFFER — comp range, benefits, growth path, culture differentiator
+
+Rules:
+• Inclusive language — no gendered terms, no unnecessary degree requirements
+• No "rockstar," "ninja," "fast-paced" — replace with specifics
+• Target: 400 words, scannable, honest
+• End with: application instructions`},
+
+{c:'hr',t:'Structured Interview Guide',
+p:`Design a structured interview guide for hiring a [role].
+
+Competencies to assess: [list 5–6 key competencies]
+
+For each competency, provide:
+• BEHAVIORAL QUESTION (STAR format) × 2
+• SITUATIONAL QUESTION × 1
+• SCORING GUIDE: what a Strong / Average / Weak answer looks like for each
+
+Additional sections:
+• 5 ROLE-SPECIFIC technical/craft questions
+• 3 CULTURE / VALUES questions (non-generic)
+• 2 QUESTIONS FOR THE CANDIDATE to evaluate us (shows we respect them)
+
+Legal note: flag any questions that may be problematic in [US / UK / EU] employment law.
+
+Interview structure: [phone screen / panel / technical round] with time allocation.`},
+
+{c:'hr',t:'Performance Review',
+p:`Write a [mid-year / annual] performance review for [employee name], [role], who reports to me.
+
+Their accomplishments this period:
+[list key wins and contributions]
+
+Areas needing development:
+[list growth areas]
+
+Overall rating: [Exceeds / Meets / Below expectations]
+
+Structure the review as:
+1. STRENGTHS — name specific contributions with business impact, not generic praise
+2. DEVELOPMENT AREAS — use SBI model: Situation → Behavior → Impact, with growth suggestion
+3. GOALS FOR NEXT PERIOD — 3 goals with SMART success criteria each
+4. CAREER DEVELOPMENT — growth opportunities aligned to their stated ambitions
+
+Tone: direct, specific, growth-focused, equitable — avoid recency bias.
+Length: 400–600 words. No platitudes.`},
+
+{c:'hr',t:'30-60-90 Day Onboarding Plan',
+p:`Create a 30-60-90 day onboarding plan for a new [role] joining [team/department].
+
+For each phase, define:
+LEARNING OBJECTIVES — what they should know by phase end
+KEY RELATIONSHIPS — who they must meet and why
+SYSTEMS ACCESS — tools and permissions needed this phase
+PROJECTS — progression: shadow → contribute → own
+MILESTONES — how success is demonstrated
+MANAGER CHECK-INS — cadence and focus areas
+
+WEEK 1 SURVIVAL GUIDE:
+• Day 1 logistics checklist
+• Quick wins to build confidence
+• Top 5 documents/resources to read
+
+90-DAY SUCCESS DEFINITION:
+What does "thriving" look like by day 90?
+How will we measure it together?`},
+
+{c:'hr',t:'HR Policy Document',
+p:`Draft a clear, fair [policy type: remote work / PTO / code of conduct / performance management] policy for a [company size/stage].
+
+Structure:
+1. PURPOSE — why this policy exists (2 sentences)
+2. SCOPE — who it applies to and any exceptions
+3. POLICY STATEMENT — the core rules in plain English
+4. GUIDELINES — step-by-step procedures for common scenarios
+5. EMPLOYEE RESPONSIBILITIES
+6. MANAGER RESPONSIBILITIES
+7. EXCEPTIONS PROCESS — how to request and who approves
+8. ENFORCEMENT — progressive steps and consequences
+9. EFFECTIVE DATE & REVIEW SCHEDULE
+
+Rules:
+• Plain English — no unnecessary legal jargon
+• Specific over vague: "2 business days" not "promptly"
+• Max 2 pages
+• Flag sections requiring legal review with [LEGAL REVIEW NEEDED]`},
+
+// ── CUSTOMER SERVICE ───────────────────────────────────────────
+{c:'cx',t:'Support Response Templates',
+p:`Create 5 professional customer support email templates for these scenarios:
+
+1. PRODUCT NOT WORKING AS EXPECTED
+2. BILLING DISPUTE / OVERCHARGE
+3. DELAYED DELIVERY OR SERVICE
+4. FEATURE REQUEST ACKNOWLEDGMENT
+5. SAVE THE CANCELLATION (win-back)
+
+For each template:
+• Subject line (2 options)
+• Personalized greeting
+• Empathy statement that feels human, not scripted
+• Clear resolution or next step with timeline
+• Proactive gesture to exceed expectation
+• Confident, warm closing with named sign-off placeholder
+
+Rules: max 150 words each. All placeholders in [brackets].
+Tone: warm, accountable, solution-first — never defensive.`},
+
+{c:'cx',t:'Escalation Response',
+p:`Write a response for this escalated customer complaint.
+
+Customer's complaint: [paste complaint text]
+Customer's emotional state: [frustrated / angry / disappointed / confused]
+What actually happened (internal truth): [context]
+What we can do: [resolution options available]
+What we cannot do: [limitations]
+Who is responding: [support manager / account director]
+
+Requirements:
+1. Lead with empathy — acknowledge feelings before facts
+2. Take clear ownership without blaming colleagues, systems, or the customer
+3. State the resolution in one sentence — no ambiguity
+4. Provide specific timeline for any pending steps
+5. Offer a goodwill gesture if appropriate: [options]
+6. Close in a way that rebuilds trust
+
+Tone: senior, human, accountable. Max 200 words.`},
+
+{c:'cx',t:'Help Center FAQ Generator',
+p:`Generate a FAQ document for our [product/service] help center.
+
+Based on this information: [paste product description, common support tickets, or known pain points]
+
+Create 15–20 Q&A pairs organized into these categories:
+• Getting Started
+• Account & Billing
+• Features & How-To
+• Troubleshooting
+• Integrations (if applicable)
+
+For each Q&A:
+• Question: written as a customer would actually type it (not internal phrasing)
+• Answer: plain language, under 100 words, actionable
+• Related articles: [placeholder for cross-links]
+• Tags: [for search indexing]
+
+Bonus: flag 3 questions that most likely need a video walkthrough instead of text.`},
+
+{c:'cx',t:'Voice of Customer Analysis',
+p:`Analyze these customer feedback items and synthesize actionable insights.
+
+[paste feedback, survey responses, support tickets, or review data here]
+
+Provide:
+1. TOP THEMES — top 5 by frequency, with verbatim customer quotes for each
+2. SENTIMENT BREAKDOWN — positive / negative / neutral % and key driver for each
+3. FEATURE REQUESTS — ranked by frequency × stated importance, top 5
+4. PAIN POINTS — top 5 that need immediate attention with customer impact rating
+5. NPS DRIVERS — what specifically drives promoters vs. detractors
+6. QUICK WINS (< 30 day fixes) — 3 recommendations
+7. STRATEGIC IMPROVEMENTS — 3 product/service changes worth prioritizing
+
+Format: suitable for product review meeting. Lead with the insight, support with quotes.`},
+
+// ── SOCIAL MEDIA ───────────────────────────────────────────────
+{c:'social',t:'LinkedIn Post',
+p:`Write a LinkedIn post for [author name, role, company] on the topic of [professional insight / lesson / announcement].
+
+HOOK (first 1–2 lines — must earn the scroll):
+• No "I'm excited to share" or "Thrilled to announce"
+• Options: surprising stat / contrarian take / micro-story opener / bold claim
+
+BODY:
+• 3–5 short paragraphs, max 3 lines each
+• One concrete specific insight per paragraph
+• White space between paragraphs
+• Zero vague advice: every sentence must be specific or cut
+
+CLOSE:
+• Genuine question to drive comments OR a takeaway readers can act on today
+
+Format:
+• Emoji use: [none / minimal / moderate]
+• Target length: 150–300 words
+• Write 2 versions: one for higher engagement, one for authority-building`},
+
+{c:'social',t:'Twitter / X Thread',
+p:`Write a Twitter/X thread on [topic] for [account type: B2B brand / founder / professional].
+
+Goal: [educate / inspire / build following / challenge an assumption]
+
+TWEET 1 (hook): under 280 chars — makes people stop and read. No "🧵 Thread:" opener. Start with the most interesting sentence.
+
+TWEETS 2–8: each one:
+• Standalone valuable (could be a standalone tweet)
+• Builds on the previous point
+• Short sentences, punchy, no padding words
+• Ends in a way that pulls reader to next tweet
+
+TWEET 9: synthesis — the one insight to remember
+TWEET 10: CTA — follow / retweet / click link / reply with answer
+
+Format: number each tweet [1/10], show character count per tweet.
+Overall length: punchy — no more than 280 chars per tweet, average 200.`},
+
+{c:'social',t:'Multi-Platform Campaign Copy',
+p:`Write social media copy for the [campaign name] campaign promoting [product / event / offer].
+
+Target audience: [persona]
+Campaign message: [core message or offer]
+
+Produce 3 variations for each platform:
+
+LINKEDIN (professional angle, 150 words max)
+INSTAGRAM (visual storytelling, 80 words + hashtag block)
+TWITTER/X (punchy, 240 chars max)
+
+For each post provide:
+• Version 1: Benefit-focused
+• Version 2: Social proof / testimonial style
+• Version 3: Urgency / scarcity
+
+Hashtag strategy: [5 high-volume] + [5 niche] hashtags per platform
+CTA options for each: [click / share / comment / DM / sign up]
+A/B test note: flag which variation to test first and why`},
+
+{c:'social',t:'Crisis Communication Post',
+p:`Draft social media crisis communication for [company/brand] regarding [incident description].
+
+Facts confirmed: [what we know]
+Facts unknown: [what we're still investigating]
+Who is affected: [audience impacted]
+Actions taken so far: [steps already in motion]
+
+Deliver 3 posts in sequence:
+
+POST 1 — HOLDING STATEMENT (within 1 hour):
+Acknowledge → Empathize → Commit to update → No speculation
+
+POST 2 — 24-HOUR UPDATE:
+Progress made → What's still being resolved → Timeline → Direct contact
+
+POST 3 — RESOLUTION / CLOSE:
+What happened → What we did → What changes → How to get help
+
+INTERNAL VERSION: all-staff communication for each stage
+
+Rules for all posts: no corporate-speak, no passive voice, no deflection, no excessive legal hedging. Human voice. Accountable tone.`},
+
+// ── PROJECT MANAGEMENT ─────────────────────────────────────────
+{c:'pm',t:'Project Charter',
+p:`Create a comprehensive project charter for [project name] ready for executive sign-off.
+
+Project context: [brief background]
+Sponsoring executive: [name/role]
+
+Include these sections:
+1. EXECUTIVE SUMMARY — 3 sentences: problem → solution → expected value
+2. BUSINESS CASE — why now, what opportunity or risk this addresses
+3. SCOPE — in-scope (bullet list) and explicitly OUT-OF-SCOPE (critical to state)
+4. DELIVERABLES — 5–7 outputs with acceptance criteria for each
+5. SUCCESS METRICS — quantified targets (not "improve performance")
+6. MILESTONES — [5–6 key dates with deliverable at each]
+7. RESOURCES — team roles, budget range, key tools
+8. RISKS — top 5 with probability, impact, and mitigation
+9. DEPENDENCIES & ASSUMPTIONS
+10. STAKEHOLDER RACI MATRIX`},
+
+{c:'pm',t:'Risk Register',
+p:`Build a risk register for [project or initiative].
+
+Identify 8–10 risks across these categories: technical, resources, timeline, third-party/vendor, organizational change, compliance/legal.
+
+For each risk:
+RISK STATEMENT: "If [cause], then [consequence], resulting in [impact]"
+PROBABILITY: 1–5 (with label: Very Low / Low / Medium / High / Very High)
+IMPACT: 1–5
+RISK SCORE: P × I
+RAG STATUS: 🔴 / 🟡 / 🟢
+RISK OWNER: [role]
+MITIGATION: proactive steps to reduce probability
+CONTINGENCY: response plan if risk materializes
+EARLY WARNING SIGNS: leading indicators to watch
+REVIEW FREQUENCY: weekly / bi-weekly / monthly
+
+Sort by risk score descending. Flag any risks requiring escalation.`},
+
+{c:'pm',t:'Sprint Planning Session',
+p:`Help me plan this sprint for [team name].
+
+Sprint details:
+Sprint number: [#] | Duration: [1 or 2 weeks] | Start date: [date]
+Sprint goal: [one-sentence objective]
+Team capacity: [X story points or X hours total]
+
+For each backlog item I provide, analyze:
+1. CLARITY — is the definition of done clear? Flag ambiguities
+2. DEPENDENCIES — what does this block on, or get blocked by?
+3. STORY POINTS — Fibonacci estimate (1/2/3/5/8/13) with reasoning
+4. RISK — any unknowns that could blow the estimate
+5. REFINEMENT NEEDED — flag if more grooming required before committing
+
+Final output:
+• Recommended sprint backlog (≤ 80% of capacity for buffer)
+• Sprint goal health check: does the selected work actually achieve the goal?
+• Top 3 risks to this sprint
+
+[paste backlog items here]`},
+
+{c:'pm',t:'Stakeholder Communication Plan',
+p:`Create a stakeholder communication plan for [project name].
+
+Stakeholders: [list name / role / org / their primary concern]
+
+For each stakeholder group, define:
+• Communication objective (what they need to know/feel/do)
+• Key messages tailored to their interests
+• Concerns they likely have (address proactively)
+• Preferred format: [meeting / email / dashboard / Slack]
+• Frequency and timing
+• Sender (who delivers this communication)
+• Feedback mechanism
+
+Deliverables:
+1. COMMUNICATION CALENDAR — first 4 weeks, all touchpoints mapped
+2. ESCALATION PROTOCOL — what triggers escalation and to whom
+3. TEMPLATE STUB for each major communication type
+4. "NO SURPRISES" CHECKLIST — signals that a stakeholder is becoming a risk`},
+
+{c:'pm',t:'Sprint Retrospective',
+p:`Design a retrospective session for [team name] after [sprint / project / quarter].
+
+Team: [X people, mixed roles]
+Duration: [X minutes]
+Remote or in-person: [delivery format]
+Notable context: [any specific tensions, wins, or themes to address]
+
+Design the full agenda:
+
+OPENING ACTIVITY (5 min) — energizer + set safety and purpose
+
+DATA GATHERING (15 min) — use [4Ls / Sailboat / Start-Stop-Continue / Mad-Sad-Glad]:
+• Facilitation instructions step by step
+• Prompts for each section
+
+INSIGHTS (10 min) — clustering, dot-voting, prioritization method
+
+ACTION PLANNING (10 min) — format for SMART retro actions (max 3 actions)
+
+CLOSE (5 min) — retro of the retro + appreciation
+
+Include: facilitator tips for the 3 most common dysfunctions (silence / blame / same actions every sprint)`},
+];
+
+// ────────────────────────────────────────────────────────────────
+let activeTab = 'all';
+let searchTerm = '';
+
+function getCat(id){ return CATS.find(c=>c.id===id)||CATS[0]; }
+function countFor(id){ return id==='all'?PROMPTS.length:PROMPTS.filter(p=>p.c===id).length; }
+
+function highlightVars(text){
+  return text.replace(/\[([^\]]+)\]/g,'<span class="var">[$1]</span>');
+}
+
+function buildSidebar(){
+  const list = document.getElementById('catList');
+  list.innerHTML = '';
+  CATS.forEach((cat, i) => {
+    if(i === 1){ const d=document.createElement('div'); d.className='cat-divider'; list.appendChild(d); }
+    const btn = document.createElement('button');
+    btn.className = 'cat-item' + (cat.id===activeTab?' active':'');
+    btn.innerHTML = `<span class="cat-icon">${cat.icon}</span><span class="cat-name">${cat.name}</span><span class="cat-cnt">${countFor(cat.id)}</span>`;
+    btn.onclick = ()=>{ activeTab=cat.id; render(); buildSidebar(); buildMobileCats(); };
+    list.appendChild(btn);
+  });
+}
+
+function buildMobileCats(){
+  const strip = document.getElementById('mobileCats');
+  strip.innerHTML = '';
+  CATS.forEach(cat=>{
+    const btn = document.createElement('button');
+    btn.className = 'mobile-tab' + (cat.id===activeTab?' active':'');
+    btn.innerHTML = `${cat.icon} ${cat.name}`;
+    btn.onclick = ()=>{ activeTab=cat.id; render(); buildSidebar(); buildMobileCats(); };
+    strip.appendChild(btn);
+  });
+}
+
+function filtered(){
+  return PROMPTS.filter(p=>{
+    const inCat = activeTab==='all'||p.c===activeTab;
+    const inSearch = !searchTerm || p.t.toLowerCase().includes(searchTerm) || p.p.toLowerCase().includes(searchTerm) || p.c.toLowerCase().includes(searchTerm);
+    return inCat && inSearch;
+  });
+}
+
+function render(){
+  const grid = document.getElementById('grid');
+  const empty = document.getElementById('empty');
+  const bar = document.getElementById('resultsBar');
+  const items = filtered();
+  grid.innerHTML = '';
+  empty.classList.toggle('show', items.length===0);
+  bar.innerHTML = `Showing <b>${items.length}</b> prompt${items.length!==1?'s':''} ${activeTab!=='all'?`in <b>${getCat(activeTab).name}</b>`:'across all categories'}`;
+
+  items.forEach((p,i)=>{
+    const cat = getCat(p.c);
+    const varCount = (p.p.match(/\[([^\]]+)\]/g)||[]).length;
+    const card = document.createElement('div');
+    card.className='card';
+    card.style.cssText=`--cg:${cat.g};animation-delay:${Math.min(i*0.045,0.5)}s`;
+    card.innerHTML=`
+      <div class="card-top">
+        <div class="card-meta">
+          <span class="badge" style="--bl-bg:${cat.lbg};--bl-col:${cat.lcol};--bl-bdr:${cat.lbdr};--bd-bg:${cat.bg};--bd-col:${cat.col};--bd-bdr:${cat.bdr}">${cat.icon} ${cat.name}</span>
+          <div class="card-title">${p.t}</div>
+        </div>
+        <button class="btn-copy" onclick="copyPrompt(this,'${escJs(p.p)}')">
+          <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="9" y="9" width="13" height="13" rx="2"/><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"/></svg>
+          Copy
+        </button>
+      </div>
+      <div class="prompt-preview">${p.p.slice(0,200)}${p.p.length>200?'…':''}</div>
+      <div class="prompt-full">${highlightVars(p.p)}</div>
+      <div class="card-foot">
+        <button class="expand-btn" onclick="toggleCard(this)">
+          <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="6 9 12 15 18 9"/></svg>
+          <span>Show full prompt</span>
+        </button>
+        ${varCount>0?`<div class="var-count"><span class="var-dot"></span>${varCount} variable${varCount!==1?'s':''} to fill</div>`:''}
+      </div>`;
+    grid.appendChild(card);
+  });
+}
+
+function escJs(s){ return s.replace(/\\/g,'\\\\').replace(/'/g,"\\'").replace(/\n/g,'\\n'); }
+
+function toggleCard(btn){
+  const card = btn.closest('.card');
+  const open = card.classList.toggle('open');
+  btn.querySelector('span').textContent = open ? 'Hide prompt' : 'Show full prompt';
+  btn.querySelector('svg').style.transform = open ? 'rotate(180deg)' : '';
+}
+
+function copyPrompt(btn, text){
+  const decoded = text.replace(/\\n/g,'\n');
+  navigator.clipboard.writeText(decoded).then(()=>{
+    btn.classList.add('ok');
+    btn.innerHTML=`<svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="20 6 9 17 4 12"/></svg> Copied`;
+    showToast();
+    setTimeout(()=>{ btn.classList.remove('ok'); btn.innerHTML=`<svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="9" y="9" width="13" height="13" rx="2"/><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"/></svg> Copy`; },2000);
+  });
+}
+
+let toastTimer;
+function showToast(){
+  const t=document.getElementById('toast');
+  t.classList.add('show');
+  clearTimeout(toastTimer);
+  toastTimer=setTimeout(()=>t.classList.remove('show'),2200);
+}
+
+document.getElementById('searchInput').addEventListener('input',e=>{
+  searchTerm=e.target.value.toLowerCase().trim();
+  render();
+});
+
+document.getElementById('statTotal').textContent = PROMPTS.length;
+
+// ── THEME TOGGLE ────────────────────────────────────────────────
+const html = document.documentElement;
+if(localStorage.getItem('pv-theme') === 'dark') html.classList.add('dark');
+
+document.getElementById('themeToggle').addEventListener('click', () => {
+  html.classList.toggle('dark');
+  localStorage.setItem('pv-theme', html.classList.contains('dark') ? 'dark' : 'light');
+});
+
+buildSidebar();
+buildMobileCats();
+render();
+</script>
+</body>
+</html>
